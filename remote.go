@@ -286,6 +286,11 @@ type timeoutParam struct {
 	Ms uint `json:"ms"`
 }
 
+type pageloadTimeoutParam struct {
+	TimeoutType string `json:"type"`
+	Ms          uint   `json:"ms"`
+}
+
 func (wd *remoteWebDriver) SetAsyncScriptTimeout(ms uint) error {
 	return wd.voidCommand("/session/%s/timeouts/async_script", timeoutParam{ms})
 }
@@ -295,7 +300,7 @@ func (wd *remoteWebDriver) SetImplicitWaitTimeout(ms uint) error {
 }
 
 func (wd *remoteWebDriver) SetPageLoadTimeout(ms uint) error {
-	return wd.voidCommand("/session/%s/timeouts/page_load", timeoutParam{ms})
+	return wd.voidCommand("/session/%s/timeouts", pageloadTimeoutParam{"page load", ms})
 }
 
 func (wd *remoteWebDriver) AvailableEngines() ([]string, error) {
